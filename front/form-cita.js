@@ -17,5 +17,19 @@ fecha_element.setAttribute("min", today);
 
 fecha_element.addEventListener('change', e => {
     const fecha_seleccionada = new Date();
-    console.log(e.target.value);
+    console.log(new Date(e.target.value));
 });
+
+
+
+function off_overlay(){
+    const overlay_element = document.getElementsByClassName('overlay')[0];
+    overlay_element.style.display = "None";
+}
+
+function on_overlay(){
+    const overlay_element = document.getElementsByClassName('overlay')[0];
+    overlay_element.style.display = "Flex";
+}
+
+off_overlay();
