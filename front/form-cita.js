@@ -4,10 +4,11 @@ async function get_today_citas(today){
     try {
         const respuesta = await fetch(`http://localhost/citas-uiw/app-citas/index.php/Cita/get_dates/${today}`);
         const json_respuesta = await respuesta.json();
-        off_overlay();
 
         //5.Mostrar las horas disponibles
         display_hours(json_respuesta);
+
+        off_overlay();
     } catch (error) {
         alert(error);
     }
@@ -48,6 +49,13 @@ function on_overlay() {
 function display_hours(horas_disponibles) {
     const availables_hours_element = document.getElementById('horas-disponibles');
 
+    if ( availables_hours_element.hasChildNodes ) {
+
+        while ( availables_hours_element.firstChild ) {
+            availables_hours_element.removeChild( availables_hours_element.firstChild );
+        }
+    }
+
     Object.values(horas_disponibles).forEach(hora => {
         const option_element = document.createElement('option');
         option_element.value = hora;
@@ -75,6 +83,17 @@ set_min_date(formatted_date);
 
 const fecha_element = document.getElementById("fecha-solicitada");
 fecha_element.addEventListener('change', e => {
-    const fecha_seleccionada = new Date();
-    console.log(new Date(e.target.value));
+
+    //Si es un valor valido
+    if ( !e.target.value ){
+        return;
+    }
+    on_overlay();
+
+    const fecha_seleccionada = new Date(e.target.value);
+    fecha_seleccionada.setDate( fecha_seleccionada.getDate() + 1);
+    const formatted_date = get_format_date(fecha_seleccionada);
+
+    get_today_citas(formatted_date);
+
 });
