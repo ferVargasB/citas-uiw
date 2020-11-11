@@ -2,7 +2,7 @@
 async function get_today_citas(today){
 
     try {
-        const respuesta = await fetch(`http://localhost/citas-uiw/back/index.php/Cita/get_dates/${today}`);
+        const respuesta = await fetch(`http://localhost/citas-uiw/app-citas/index.php/Cita/get_dates/${today}`);
         const json_respuesta = await respuesta.json();
         console.table(json_respuesta);
         off_overlay();
