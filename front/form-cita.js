@@ -1,6 +1,6 @@
-/*** Definciones de funciones ***/
+/*** Definiciones de funciones ***/
 
-async function get_today_citas(today){
+async function get_today_citas(today) {
 
     try {
         const respuesta = await fetch(`http://localhost/citas-uiw/app-citas/index.php/Cita/get_dates/${today}`);
@@ -11,30 +11,69 @@ async function get_today_citas(today){
 
         off_overlay();
     } catch (error) {
-        alert(error);
+        Swal.fire({
+            title: 'Error',
+            text: 'Oucrrió un error al obtener horarios disponibles',
+            icon: 'error',
+            confirmButtonText: 'Ok'
+        });
+        off_overlay();
     }
 }
 
-async function crear_cita(data){
-    
+async function crear_cita(data) {
+
     try {
         const respuesta = await fetch(`http://localhost/citas-uiw/app-citas/index.php/Cita/crear/`, {
             method: 'POST',
             body: data
         });
         const json_respuesta = await respuesta.json();
+
+        //Mandar a otra pagina
         alert(json_respuesta);
         console.log(json_respuesta);
 
-        off_overlay();
     } catch (error) {
-        alert('No se ha podido crear la cita, intenta más tarde');
+        Swal.fire({
+            title: 'Error',
+            text: 'Oucrrió un error al crear su cita, intente más tarde',
+            icon: 'error',
+            confirmButtonText: 'Ok'
+        });
         off_overlay();
     }
 
 }
 
-function get_format_date(today_date){
+function es_fin_semana(date) {
+    //Validar si es fin de semana
+    if (date.getDay() == 6 || date.getDay() == 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+//Aumentar dias hasta el próximo habil
+function aumentar_dias(date) {
+    
+    //Su es Sábado
+    if (date.getDay() == 6) {
+        date.setDate(date.getDate() + 2);
+    }
+
+    //Su es Domingo
+    if (date.getDay() == 0) {
+        date.setDate(date.getDate() + 1);
+    }
+
+    const formatted_date = get_format_date(date);
+    fecha_element.value = formatted_date;
+    get_today_citas( formatted_date );
+}
+
+function get_format_date(today_date) {
     var dd = today_date.getDate();
     var mm = today_date.getMonth() + 1; //Enero is 0!
     var yyyy = today_date.getFullYear();
@@ -69,10 +108,10 @@ function on_overlay() {
 function display_hours(horas_disponibles) {
     const availables_hours_element = document.getElementById('horas-disponibles');
 
-    if ( availables_hours_element.hasChildNodes ) {
+    if (availables_hours_element.hasChildNodes) {
 
-        while ( availables_hours_element.firstChild ) {
-            availables_hours_element.removeChild( availables_hours_element.firstChild );
+        while (availables_hours_element.firstChild) {
+            availables_hours_element.removeChild(availables_hours_element.firstChild);
         }
     }
 
@@ -107,17 +146,26 @@ const fecha_element = document.getElementById("fecha-solicitada");
 fecha_element.addEventListener('change', e => {
 
     //Si es un valor valido
-    if ( !e.target.value ){
+    if (!e.target.value) {
         return;
     }
     on_overlay();
-
     const fecha_seleccionada = new Date(e.target.value);
-    fecha_seleccionada.setDate( fecha_seleccionada.getDate() + 1);
+    fecha_seleccionada.setDate(fecha_seleccionada.getDate() + 1);
     const formatted_date = get_format_date(fecha_seleccionada);
 
-    get_today_citas(formatted_date);
+    //Validar si es fin de semana
+    if ( es_fin_semana(fecha_seleccionada) ) {
+        Swal.fire({
+            title: 'Error',
+            text: 'No puedes agendar citas Sábados y Domingos',
+            icon: 'error',
+            confirmButtonText: 'Ok'
+        });
 
+        aumentar_dias(fecha_seleccionada);
+    }
+    get_today_citas(formatted_date);
 });
 
 //Proceso de crear una cita

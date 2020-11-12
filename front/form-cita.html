@@ -105,28 +105,28 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <div class="form-group row">
                       <label for="solicitante" class="col-sm-12 col-form-label">Persona que visitará el campus a realizar el pago</label>
                       <div class="col-sm-12">
-                        <input type="text" class="form-control" id="solicitante" name="solicitante" placeholder="Nombre de la persona">
+                        <input type="text" class="form-control" minlength="10" maxlength="100" id="solicitante" name="solicitante" placeholder="Nombre de la persona" required="">
                       </div>
                     </div>
 
                     <div class="form-group row">
                       <label for="mail" class="col-sm-12 col-form-label">Correo eléctronico para agendar su cita</label>
                       <div class="col-sm-12">
-                        <input type="text" class="form-control" id="mail" name="correo_solicitante" placeholder="Correo eléctronico">
+                        <input type="email" class="form-control" minlength="15" maxlength="100" id="mail" name="correo_solicitante" placeholder="Correo eléctronico" required="">
                       </div>
                     </div>
 
                     <div class="form-group row">
                       <label for="fecha-solicitada" class="col-sm-12 col-form-label">Selecciona tu día para ver las horas disponibles (clic en el icono del calendario para seleccionar tu día)</label>
                       <div class="col-sm-12">
-                        <input type="date" class="form-control" id="fecha-solicitada" name="fecha_solicitada" max="2020-12-18" placeholder="Ingresa el día">
+                        <input type="date" class="form-control" id="fecha-solicitada" name="fecha_solicitada" max="2020-12-18" placeholder="Ingresa el día" required="">
                       </div>
                     </div>
 
                     <div class="form-group row">
                       <label for="horas-disponibles" class="col-sm-12 col-form-label">Horas disponibles para el día que selecionaste:</label>
                       <div class="col-sm-12">
-                        <select class="form-control" id="horas-disponibles" name="hora_solicitada">
+                        <select class="form-control" id="horas-disponibles" name="hora_solicitada" required="">
                         </select>
                       </div>
                     </div>
@@ -184,6 +184,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../dist/js/adminlte.min.js"></script>
+
+<!-- Plugin sweetalert-->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 <script src="./form-cita.js"></script>
 </body>
