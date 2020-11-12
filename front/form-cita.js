@@ -6,7 +6,19 @@ async function get_today_citas(today) {
         const respuesta = await fetch(`http://localhost/citas-uiw/app-citas/index.php/Cita/get_dates/${today}`);
         const json_respuesta = await respuesta.json();
 
-        //5.Mostrar las horas disponibles
+        //Si hay citas disponibles para el día solicitado
+        if ( !json_respuesta.length ){
+            Swal.fire({
+                title: 'Error',
+                text: 'No hay citas disponibles hoy, selecciona otro día',
+                icon: 'error',
+                confirmButtonText: 'Ok'
+            });
+            off_overlay();
+            remove_hours();
+            return;
+        }
+
         display_hours(json_respuesta);
 
         off_overlay();
@@ -105,7 +117,7 @@ function on_overlay() {
     overlay_element.style.display = "Flex";
 }
 
-function display_hours(horas_disponibles) {
+function remove_hours(){
     const availables_hours_element = document.getElementById('horas-disponibles');
 
     if (availables_hours_element.hasChildNodes) {
@@ -114,6 +126,12 @@ function display_hours(horas_disponibles) {
             availables_hours_element.removeChild(availables_hours_element.firstChild);
         }
     }
+}
+
+function display_hours(horas_disponibles) {
+    const availables_hours_element = document.getElementById('horas-disponibles');
+
+    remove_hours();
 
     Object.values(horas_disponibles).forEach(hora => {
         const option_element = document.createElement('option');
