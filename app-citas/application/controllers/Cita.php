@@ -15,6 +15,38 @@ class Cita extends CI_Controller {
         $citas = $this->Cita_model->get_all_dates();
 		echo json_encode($citas);
     }
+
+    public function crear()
+    {
+        //Verifica que sea post
+        if ( empty($this->input->post()) ){
+             exit('No direct script access allowed');
+        }
+        
+        try {
+        
+            $response = array(
+                'codigo' => '100',
+                'mensaje' => 'No se pudo crear tu cita'
+            );
+    
+            //2. Validar data
+            if ( $this->validate_data() ){
+
+                //3. Insertar datos
+                $this->Cita_model->insert_cita( $this->get_validate_data() );
+                $response['codigo'] = '200';
+                $response['mensaje'] = 'Se creó tu cita';
+
+            }
+
+            echo json_encode($response);
+            
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+        
+    }
     
     public function get_dates($date)
     {
@@ -46,5 +78,36 @@ class Cita extends CI_Controller {
         $horas_disponibles = array_diff($horario, $horas_ocupadas);
 
         return $horas_disponibles;
+    }
+
+    private function validate_data()
+    {
+        $solicitante = trim( $this->input->post('solicitante') );
+        $mail = trim( $this->input->post('correo_solicitante') );
+
+        if ( strlen($solicitante) == 0 || strlen($solicitante) > 100 ){
+            return false;
+        } 
+
+        if ( strlen($mail) == 0 || strlen($mail) > 100 ){
+            return false;
+        }
+
+        return true;
+    }
+
+    private function get_validate_data(){
+
+        $solicitante = trim( $this->input->post('solicitante') );
+        $mail = trim( $this->input->post('correo_solicitante') );
+        
+        $cleaned_data = array(
+            'solicitante' => $solicitante,
+            'correo_solicitante' => $mail,
+            'fecha_solicitada' => $this->input->post('fecha_solicitada'),
+            'hora_solicitada' => $this->input->post('hora_solicitada')
+        );
+
+        return $cleaned_data;
     }
 }

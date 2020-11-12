@@ -1,4 +1,5 @@
 /*** Definciones de funciones ***/
+
 async function get_today_citas(today){
 
     try {
@@ -12,6 +13,25 @@ async function get_today_citas(today){
     } catch (error) {
         alert(error);
     }
+}
+
+async function crear_cita(data){
+    
+    try {
+        const respuesta = await fetch(`http://localhost/citas-uiw/app-citas/index.php/Cita/crear/`, {
+            method: 'POST',
+            body: data
+        });
+        const json_respuesta = await respuesta.json();
+        alert(json_respuesta);
+        console.log(json_respuesta);
+
+        off_overlay();
+    } catch (error) {
+        alert('No se ha podido crear la cita, intenta más tarde');
+        off_overlay();
+    }
+
 }
 
 function get_format_date(today_date){
@@ -65,6 +85,7 @@ function display_hours(horas_disponibles) {
     });
 
 }
+
 /*** Fin ***/
 
 //1. Get fecha actual
@@ -81,6 +102,7 @@ set_min_date(formatted_date);
 
 
 
+//Proceso de selecionar una cita y obtener las horas disponibles
 const fecha_element = document.getElementById("fecha-solicitada");
 fecha_element.addEventListener('change', e => {
 
@@ -96,4 +118,14 @@ fecha_element.addEventListener('change', e => {
 
     get_today_citas(formatted_date);
 
+});
+
+//Proceso de crear una cita
+const form = document.getElementById('crear-cita-form');
+form.addEventListener('submit', e => {
+    on_overlay();
+    e.preventDefault();
+
+    const dataform = new FormData(form);
+    crear_cita(dataform);
 });

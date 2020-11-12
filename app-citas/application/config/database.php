@@ -75,10 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => 'root',
-	'database' => 'citas_uiw',
+	'hostname' => 'database-mysql.cjoge45ov4mr.us-east-2.rds.amazonaws.com',
+	'username' => 'admin',
+	'password' => '8m--45Bn',
+	'database' => 'uiw_citas',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

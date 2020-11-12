@@ -14,4 +14,9 @@ class Cita_model extends CI_Model  {
         $query = $this->db->get_where('cita', array('fecha_solicitada' => $date));
         return $query->result();
     }
+
+    public function insert_cita($data)
+    {    
+        $this->db->insert('cita', $data);
+    }
 }
