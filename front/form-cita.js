@@ -6,7 +6,7 @@ async function get_today_citas(today) {
         const respuesta = await fetch(`http://localhost/citas-uiw/app-citas/index.php/Cita/get_dates/${today}`);
         const json_respuesta = await respuesta.json();
 
-        //Si hay citas disponibles para el día solicitado
+        //Si no hay citas disponibles para el día solicitado
         if ( !json_respuesta.length ){
             Swal.fire({
                 title: 'Error',
@@ -43,13 +43,12 @@ async function crear_cita(data) {
         const json_respuesta = await respuesta.json();
 
         //Mandar a otra pagina
-        alert(json_respuesta);
-        console.log(json_respuesta);
+        window.location.replace(`success-cita.html?qid=${encodeURIComponent( json_respuesta.id )}&id=${ json_respuesta.id }`);
 
     } catch (error) {
         Swal.fire({
             title: 'Error',
-            text: 'Oucrrió un error al crear su cita, intente más tarde',
+            text: 'Ocurrió un error al crear su cita, intente más tarde',
             icon: 'error',
             confirmButtonText: 'Ok'
         });

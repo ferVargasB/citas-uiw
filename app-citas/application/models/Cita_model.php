@@ -18,5 +18,7 @@ class Cita_model extends CI_Model  {
     public function insert_cita($data)
     {    
         $this->db->insert('cita', $data);
+        $date_id = $this->db->insert_id();
+        return $date_id;
     }
 }

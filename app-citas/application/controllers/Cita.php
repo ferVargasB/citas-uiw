@@ -34,9 +34,10 @@ class Cita extends CI_Controller {
             if ( $this->validate_data() ){
 
                 //3. Insertar datos
-                $this->Cita_model->insert_cita( $this->get_validate_data() );
+                $date_id = $this->Cita_model->insert_cita( $this->get_validate_data() );
                 $response['codigo'] = '200';
                 $response['mensaje'] = 'Se creó tu cita';
+                $response['id'] = $date_id;
 
             }
 
