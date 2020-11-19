@@ -9,6 +9,13 @@ class Cita_model extends CI_Model  {
         return $query->result();
     }
 
+    public function get_date($id)
+    {
+        $limit = 1;
+        $query = $this->db->get_where('cita', array('id_cita' => $id), $limit);
+        return $query->result();
+    }
+
     public function get_dates($date)
     {
         $query = $this->db->get_where('cita', array('fecha_solicitada' => $date));

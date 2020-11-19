@@ -12,8 +12,24 @@ class Cita extends CI_Controller {
 
 	public function index()
 	{
-        $citas = $this->Cita_model->get_all_dates();
-		echo json_encode($citas);
+        $this->load->view('citas/create-form');
+    }
+
+    public function get($id_date = null){
+
+        if ( is_null($id_date) ){
+            exit('No direct script access allowed');
+        }
+
+        try {
+            $data = array(
+                'cita' => $this->Cita_model->get_date($id_date)
+            );
+            $this->load->view('citas/details', $data);
+
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
     }
 
     public function crear()
