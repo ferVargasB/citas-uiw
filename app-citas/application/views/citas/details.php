@@ -32,9 +32,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
     <div class="container">
       <a href="" class="navbar-brand">
-        <img src="../dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+        <img src="<?php echo base_url().'assets/dist/img/UIW_logo.png';?>" alt="AdminLTE Logo" class="brand-image"
              style="opacity: .8">
-        <span class="brand-text font-weight-light">AdminLTE 3</span>
+        <span class="brand-text font-weight-light">Universidad Incarnate Word Campus Bajío</span>
       </a>
       
       <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,7 +45,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Left navbar links -->
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a href="" class="nav-link">Home</a>
+            <a href="#" class="nav-link">Home</a>
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">Contacto</a>
@@ -65,7 +65,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <div class="container">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark"> Sistema de citas para UIW<small>--</small></h1>
+            <h1 class="m-0 text-dark"> Sistema de citas para UIW<small>Campus Bajío</small></h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -82,8 +82,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <div class="container">
         <div class="row">
 
+        <?php if ($es_consulta) { ?>
           
-          <div class="col-lg-12">
+          <div class="col-lg-12 animate__animated animate__fadeInDown">
             <div class="alert alert-success alert-dismissible">
               <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
               <h5><i class="icon fas fa-check"></i> Tú cita se creó con exito!</h5>
@@ -91,7 +92,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </div>
           </div>
 
-
+        <?php } ?>  
 
           <div class="col-lg-12">
             <div class="callout callout-success">

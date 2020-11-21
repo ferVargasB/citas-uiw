@@ -15,16 +15,43 @@ class Cita extends CI_Controller {
         $this->load->view('citas/create-form');
     }
 
-    public function get($id_date = null){
+    public function login()
+    {
+        if ( empty($this->input->post()) ){
+            //Es GET
+            $this->load->view('login');
+
+        } else {
+            //Es POST
+            $codigo = $this->input->post('code');
+            $codigo = trim($codigo);
+            $clave = '2Kg0BYJr9T';
+
+            if ( $codigo != $clave ) {
+
+                header("Location:".base_url().'index.php/Cita/login/');
+                exit();
+            }
+
+            echo 'todo bien';
+            die();
+
+        }
+    }
+
+    public function get($id_date = null, $success = FALSE){
 
         if ( is_null($id_date) ){
             exit('No direct script access allowed');
         }
 
         try {
+
             $data = array(
-                'cita' => $this->Cita_model->get_date($id_date)
+                'cita' => $this->Cita_model->get_date($id_date),
+                'es_consulta' => $success
             );
+
             $this->load->view('citas/details', $data);
 
         } catch (Exception $e) {
@@ -126,5 +153,16 @@ class Cita extends CI_Controller {
         );
 
         return $cleaned_data;
+    }
+
+    private function send_mail()
+    {
+        $this->email->from('fernando.vargas@uiwbajio.mx', 'Fernando Vargas');
+        $this->email->to('someone@example.com');
+
+        $this->email->subject('Email Test');
+        $this->email->message('Testing the email class.');
+
+        $this->email->send();
     }
 }
