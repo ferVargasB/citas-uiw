@@ -43,7 +43,7 @@ async function crear_cita(data) {
         const json_respuesta = await respuesta.json();
 
         //Mandar a otra pagina
-        window.location.replace(`http://localhost/citas-uiw/app-citas/index.php/Cita/get/${json_respuesta.id}`);
+        window.location.replace(`http://localhost/citas-uiw/app-citas/index.php/Cita/get/${json_respuesta.id}/success/true/`);
 
     } catch (error) {
         Swal.fire({
@@ -144,20 +144,6 @@ function display_hours(horas_disponibles) {
 
 /*** Fin ***/
 
-//1. Get fecha actual
-const today = new Date();
-
-//2. Formatear la fecha de hoy
-const formatted_date = get_format_date(today);
-
-//3. Get citas de hoy
-get_today_citas(formatted_date);
-
-//4. Set la fecha a hoy
-set_min_date(formatted_date);
-
-
-
 //Proceso de selecionar una cita y obtener las horas disponibles
 const fecha_element = document.getElementById("fecha-solicitada");
 fecha_element.addEventListener('change', e => {
@@ -194,3 +180,24 @@ form.addEventListener('submit', e => {
     const dataform = new FormData(form);
     crear_cita(dataform);
 });
+
+
+//1. Get fecha actual
+const today = new Date();
+
+//2. Si se trata de hacer la cita un sabado o domingo
+if ( es_fin_semana(today) ) {
+
+    aumentar_dias( today );
+
+} else {
+
+    //2. Formatear la fecha de hoy
+    const formatted_date = get_format_date(today);
+
+    //3. Get citas de hoy
+    get_today_citas(formatted_date);
+
+    //4. Set la fecha a hoy
+    set_min_date(formatted_date);
+}
