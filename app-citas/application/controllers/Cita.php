@@ -19,7 +19,7 @@ class Cita extends CI_Controller
 
     public function ver_citas()
     {
-        if ( !$this->session->logged_in ){
+        if (!$this->session->logged_in) {
             header("Location:" . base_url() . 'index.php/Cita/login/');
             exit();
         }
@@ -30,12 +30,12 @@ class Cita extends CI_Controller
             'citas' => $this->Cita_model->get_dates($fecha_hoy),
             'fecha' => $fecha_hoy
         );
-        $this->load->view('citas/ver-citas', $data);    
+        $this->load->view('citas/ver-citas', $data);
     }
 
     public function login($error = false)
     {
-        if ( $this->session->logged_in ){
+        if ($this->session->logged_in) {
             header("Location:" . base_url() . 'index.php/Cita/ver_citas/');
             exit();
         }
@@ -64,7 +64,6 @@ class Cita extends CI_Controller
             $this->session->set_userdata($newdata);
             header("Location:" . base_url() . 'index.php/Cita/login/ver_citas/');
             exit();
-
         }
     }
 
@@ -110,6 +109,7 @@ class Cita extends CI_Controller
                 $response['codigo'] = '200';
                 $response['mensaje'] = 'Se creó tu cita';
                 $response['id'] = $date_id;
+                $this->send_mail($this->get_validate_data());
             }
 
             echo json_encode($response);
@@ -184,10 +184,34 @@ class Cita extends CI_Controller
         return $cleaned_data;
     }
 
-    private function send_mail()
+    private function send_mail($data)
     {
+        $this->load->library('email');
+
+        $config['protocol']    = 'smtp';
+
+        $config['smtp_host']    = 'ssl://smtp.gmail.com';
+
+        $config['smtp_port']    = '465';
+
+        $config['smtp_timeout'] = '7';
+
+        $config['smtp_user']    = '';
+
+        $config['smtp_pass']    = '';
+
+        $config['charset']    = 'utf-8';
+
+        $config['newline']    = "\r\n";
+
+        $config['mailtype'] = 'text'; // or html
+
+        $config['validation'] = TRUE; // bool whether to validate email or not      
+
+        $this->email->initialize($config);
+
         $this->email->from('fernando.vargas@uiwbajio.mx', 'Fernando Vargas');
-        $this->email->to('someone@example.com');
+        $this->email->to('fsnake_arg@hotmail.com');
 
         $this->email->subject('Email Test');
         $this->email->message('Testing the email class.');
