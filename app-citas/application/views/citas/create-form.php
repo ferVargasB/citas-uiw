@@ -43,7 +43,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Left navbar links -->
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a href="" class="nav-link">Home</a>
+            <a href="https://www.uiwbajio.mx/" class="nav-link">Home</a>
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">Contacto</a>

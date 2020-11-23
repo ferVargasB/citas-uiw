@@ -49,7 +49,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <a href="#" class="nav-link">Home</a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link">Contacto</a>
+              <a href="<?php echo base_url().'index.php/Cita/logout/'?>" class="btn btn-danger">Cerrar sesión</a>
             </li>
           </ul>
 
@@ -86,15 +86,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="col-lg-12">
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">Citas para hoy <strong><?php echo $fecha?></strong></h3>
+                  <h3 class="card-title">Citas para hoy <strong><?php echo date("d-m-Y", strtotime($fecha) )?></strong></h3>
 
                   <div class="card-tools">
                     <div class="input-group input-group-sm" style="width: 150px;">
-                      <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-
-                      <div class="input-group-append">
-                        <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -103,7 +98,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <table class="table table-hover text-nowrap">
                     <thead>
                       <tr>
-                        <th>Persona que realizá el pago</th>
+                        <th>Persona que realizará el pago</th>
                         <th>Correo</th>
                         <th>Fecha solicitada</th>
                         <th>Hora solicitada</th>
@@ -115,7 +110,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <tr>
                           <td><?php echo $cita->solicitante;?></td>
                           <td><?php echo $cita->correo_solicitante;?></td>
-                          <td><?php echo $cita->fecha_solicitada;?></td>
+                          <td><?php echo date("d-m-Y", strtotime($cita->fecha_solicitada));?></td>
                           <td><?php echo $cita->hora_solicitada;?></td>
                         </tr>
 
