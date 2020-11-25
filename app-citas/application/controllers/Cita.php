@@ -14,7 +14,12 @@ class Cita extends CI_Controller
 
     public function index()
     {
+        $data = array(
+            'title' => 'Agenda tu cita'
+        );
+        $this->load->view('templates/head', $data);
         $this->load->view('citas/create-form');
+        $this->load->view('templates/footer');
     }
 
     public function ver_citas()
@@ -28,9 +33,13 @@ class Cita extends CI_Controller
         $fecha_hoy = date('Y-m-d');
         $data = array(
             'citas' => $this->Cita_model->get_dates($fecha_hoy),
-            'fecha' => $fecha_hoy
+            'fecha' => $fecha_hoy,
+            'title' => 'Citas para hoy'
         );
+        $this->load->view('templates/head', $data);
         $this->load->view('citas/ver-citas', $data);
+        $this->load->view('templates/footer', $data);
+        
     }
 
     public function login($error = false)
@@ -41,7 +50,12 @@ class Cita extends CI_Controller
         }
 
         if (empty($this->input->post())) {
+
             //Es GET
+            $data = array(
+                'title' => 'Login citas'
+            );
+            $this->load->view('templates/head', $data);
             $this->load->view('login');
         } else {
             //Es POST
@@ -67,6 +81,18 @@ class Cita extends CI_Controller
         }
     }
 
+    public function logout()
+    {
+        if ($this->session->logged_in) {
+            $this->session->sess_destroy();
+            header("Location:" . base_url() . 'index.php/Cita/login/success_destroy');
+            exit();
+        }
+
+        header("Location:" . base_url() . 'index.php/Cita/login/');
+        exit();
+    }
+
     public function get($id_date = null, $success = FALSE)
     {
 
@@ -78,10 +104,14 @@ class Cita extends CI_Controller
 
             $data = array(
                 'cita' => $this->Cita_model->get_date($id_date),
-                'es_consulta' => $success
+                'es_consulta' => $success,
+                'title' => 'Detalles cita'
             );
 
+            $this->load->view('templates/head', $data);
             $this->load->view('citas/details', $data);
+            $this->load->view('templates/footer', $data);
+
         } catch (Exception $e) {
             echo $e->getMessage();
         }
