@@ -83,12 +83,16 @@ class Cita extends CI_Controller
 
     public function logout()
     {
+<<<<<<< Updated upstream
         if ($this->session->logged_in) {
             $this->session->sess_destroy();
             header("Location:" . base_url() . 'index.php/Cita/login/success_destroy');
             exit();
         }
 
+=======
+        $this->session->sess_destroy();
+>>>>>>> Stashed changes
         header("Location:" . base_url() . 'index.php/Cita/login/');
         exit();
     }
@@ -241,10 +245,12 @@ class Cita extends CI_Controller
         $this->email->initialize($config);
 
         $this->email->from('fernando.vargas@uiwbajio.mx', 'Fernando Vargas');
-        $this->email->to('fsnake_arg@hotmail.com');
+        $this->email->to( $data['correo_solicitante'] );
 
-        $this->email->subject('Email Test');
-        $this->email->message('Testing the email class.');
+        $this->email->subject('Horario para realizar su pago en UIW Bajío');
+        $this->email->message('Hola '.$data['solicitante']."\r\n".
+                                'Su cita para realizar su pago en caja está programado para el día: '.
+                                date("d-m-Y", strtotime($data['fecha_solicitada']) ).' en la hora: '.$data['hora_solicitada']."\r\n");
 
         $this->email->send();
     }
