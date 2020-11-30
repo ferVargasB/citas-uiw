@@ -5,6 +5,14 @@
     <a href="<?php echo base_url().'assets/dist/img/UIW_logo.png';?>"><b>Citas UIW</b> Bajio</a>
   </div>
   <!-- /.login-logo -->
+  <?php if ( $error == 1) { ?>
+    <div class="alert alert-danger alert-dismissible">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+      <h5><i class="icon fas fa-ban"></i> Error</h5>
+      El código y/o password no es correcto
+    </div>
+  <?php } ?>  
+
   <div class="card">
     <div class="card-body login-card-body">
       <p class="login-box-msg">Ingresa el código de acceso</p>

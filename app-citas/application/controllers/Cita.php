@@ -42,7 +42,34 @@ class Cita extends CI_Controller
         
     }
 
-    public function login($error = false)
+    //Interfaz de Lidia
+    public function cuentas_ver_citas()
+    {
+        if (!$this->session->logged_in) {
+            header("Location:" . base_url() . 'index.php/Cita/login/');
+            exit();
+        }
+
+        //Obtengo las citas para hoy
+        $fecha_hoy = date('Y-m-d');
+        $data = array(
+            'citas' => $this->Cita_model->get_all_dates(),
+            'fecha' => $fecha_hoy,
+            'title' => 'Citas para hoy:',
+            'css_table' => base_url().'assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css',
+            'css_responisve' => base_url().'assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css',
+            'jquery_data' => base_url().'assets/plugins/datatables/jquery.dataTables.min.js',
+            'bootstrap_data' => base_url().'assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js',
+            'data_responsive' => base_url().'assets/plugins/datatables-responsive/js/dataTables.responsive.min.js',
+            'data_responsive4' => base_url().'plugins/datatables-responsive/js/responsive.bootstrap4.min.js'
+        );
+        $this->load->view('templates/head', $data);
+        $this->load->view('citas/ver-citas-cuentas', $data);
+        $this->load->view('templates/footer', $data);
+        
+    }
+
+    public function login($error = 0)
     {
         if ($this->session->logged_in) {
             header("Location:" . base_url() . 'index.php/Cita/ver_citas/');
@@ -51,32 +78,50 @@ class Cita extends CI_Controller
 
         if (empty($this->input->post())) {
 
-            //Es GET
             $data = array(
-                'title' => 'Login citas'
+                'title' => 'Login citas',
+                'error' => $error
             );
             $this->load->view('templates/head', $data);
             $this->load->view('login');
+            
         } else {
             //Es POST
             $codigo = $this->input->post('code');
             $codigo = trim($codigo);
-            $clave = '2Kg0BYJr9T';
+            $clave = "2Kg0BYJr9T";
+            $clave_lidia = "JNoW2y50On";
 
             //El código es incorrecto
-            if ($codigo != $clave) {
+            if ($codigo != $clave && $codigo != $clave_lidia) {
 
-                header("Location:" . base_url() . 'index.php/Cita/login/error/true');
+                header("Location:" . base_url() . 'index.php/Cita/login/error/1');
                 exit();
             }
 
-            $newdata = array(
-                'username'  => 'cajauiw',
-                'logged_in' => TRUE
-            );
+
+            //Si clave es caja
+            if ($codigo == $clave){
+                $newdata = array(
+                    'username'  => 'cajauiw',
+                    'logged_in' => TRUE,
+                    'ruta' => 'index.php/Cita/ver_citas/'
+                );
+            }
+
+            //Si clave es cuentas
+            if ($codigo == $clave_lidia){
+                $newdata = array(
+                    'username'  => 'cuentas',
+                    'logged_in' => TRUE,
+                    'ruta' => 'index.php/Cita/cuentas_ver_citas/'
+                );
+            }
+
+            echo var_dump($newdata);
 
             $this->session->set_userdata($newdata);
-            header("Location:" . base_url() . 'index.php/Cita/login/ver_citas/');
+            header("Location:" . base_url() . $newdata['ruta']);
             exit();
         }
     }
