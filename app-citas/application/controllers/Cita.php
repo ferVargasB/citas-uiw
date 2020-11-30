@@ -160,6 +160,15 @@ class Cita extends CI_Controller
         die();
     }
 
+    public function get_festive_dates()
+    {
+        //Get citas con la fecha que viene como parametro
+        $citas = $this->Cita_model->get_festive_dates();
+
+        echo json_encode($citas);
+        die();
+    }
+
     private function get_availables_dates($citas)
     {
         //Creo un un nuevo arreglo con las horas ocupadas
