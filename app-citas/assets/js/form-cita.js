@@ -33,6 +33,29 @@ async function get_today_citas(today) {
     }
 }
 
+async function get_festive_dates(){
+
+    let citas = null;
+        
+    try {
+        const respuesta = await fetch(`http://localhost/citas-uiw/app-citas/index.php/Cita/get_festive_dates/`);
+        citas = await respuesta.json();
+
+        console.log(json_respuesta);
+
+        off_overlay();
+    } catch (error) {
+        
+        Swal.fire({
+            title: 'Error',
+            icon: 'error',
+            confirmButtonText: 'Ok'
+        });
+    }
+    
+    return citas;
+}
+
 async function crear_cita(data) {
 
     try {
@@ -184,6 +207,8 @@ form.addEventListener('submit', e => {
 
 //1. Get fecha actual
 const today = new Date();
+const dias_festivos = null;
+
 
 //2. Si se trata de hacer la cita un sabado o domingo
 if ( es_fin_semana(today) ) {
@@ -197,7 +222,11 @@ if ( es_fin_semana(today) ) {
 
     //3. Get citas de hoy
     get_today_citas(formatted_date);
+    
+    //4. get dias festivos
+    let citas = get_festive_dates();
+    dias_festivos = citas;
 
-    //4. Set la fecha a hoy
+    //5. Set la fecha a hoy
     set_min_date(formatted_date);
 }

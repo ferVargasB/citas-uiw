@@ -22,6 +22,12 @@ class Cita_model extends CI_Model  {
         return $query->result();
     }
 
+    public function get_festive_dates()
+    {
+        $query = $this->db->get('dias_festivos');
+        return $query->result();
+    }
+
     public function insert_cita($data)
     {    
         $this->db->insert('cita', $data);
