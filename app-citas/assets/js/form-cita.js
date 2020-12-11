@@ -33,29 +33,6 @@ async function get_today_citas(today) {
     }
 }
 
-async function get_festive_dates(){
-
-    let citas = null;
-        
-    try {
-        const respuesta = await fetch(`http://localhost/citas-uiw/app-citas/index.php/Cita/get_festive_dates/`);
-        citas = await respuesta.json();
-
-        console.log(json_respuesta);
-
-        off_overlay();
-    } catch (error) {
-        
-        Swal.fire({
-            title: 'Error',
-            icon: 'error',
-            confirmButtonText: 'Ok'
-        });
-    }
-    
-    return citas;
-}
-
 async function crear_cita(data) {
 
     try {
@@ -200,8 +177,10 @@ form.addEventListener('submit', e => {
     on_overlay();
     e.preventDefault();
 
-    const dataform = new FormData(form);
-    crear_cita(dataform);
+    e.target.submit();
+
+    //const dataform = new FormData(form);
+    //crear_cita(dataform);
 });
 
 
@@ -222,10 +201,6 @@ if ( es_fin_semana(today) ) {
 
     //3. Get citas de hoy
     get_today_citas(formatted_date);
-    
-    //4. get dias festivos
-    let citas = get_festive_dates();
-    dias_festivos = citas;
 
     //5. Set la fecha a hoy
     set_min_date(formatted_date);

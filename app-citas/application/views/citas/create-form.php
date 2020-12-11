@@ -74,8 +74,13 @@
                 <div class="card-header">
                   <h5 class="card-title m-0">Llena el formulario para crear tu cita</h5>
                 </div>
+                <div class="alert alert-danger alert-dismissible">
+                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                  <h5><i class="icon fas fa-ban"></i> Alert!</h5>
+                    <?php echo validation_errors();?>
+                </div>
                 <div class="card-body">
-                  <form class="form-horizontal" method="POST" id="crear-cita-form">
+                  <form class="form-horizontal" action="<?php echo base_url().'index.php/Cita/';?>" method="POST" id="crear-cita-form">
                     <div class="card-body">
                       <div class="form-group row">
                         <label for="solicitante" class="col-sm-12 col-form-label">Persona que visitará el campus a realizar el pago</label>

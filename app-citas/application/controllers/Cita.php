@@ -14,12 +14,37 @@ class Cita extends CI_Controller
 
     public function index()
     {
-        $data = array(
-            'title' => 'Agenda tu cita'
+        $this->load->helper(array('form', 'url'));
+
+        $this->load->library('form_validation');
+        
+        $this->form_validation->set_rules(
+            'solicitante', 'Solicitante', 
+            'required|min_length[15]|max_length[20]',
+            array(
+                'required' => 'El nombre de la persona no debe exceder los 100 caracteres y debe tener más de 15'
+            )
         );
-        $this->load->view('templates/head', $data);
-        $this->load->view('citas/create-form');
-        $this->load->view('templates/footer');
+        $this->form_validation->set_rules(
+            'correo_solicitante', 
+            'Email', 'required|valid_email|min_length[5]|max_length[30]',
+            array(
+                'required' => 'El correo  no debe exceder los 100 caracteres y debe tener más de 5',
+            )
+        );
+        $this->form_validation->set_rules('fecha_solicitada', 'Fecha solicitada', 'required');
+        $this->form_validation->set_rules('hora_solicitada', 'Hora solicitada', 'required');
+
+        if ($this->form_validation->run() == FALSE)
+        {
+            $this->load->view('templates/head');
+            $this->load->view('citas/create-form');
+            $this->load->view('templates/footer');
+        }
+        else
+        {
+                echo var_dump($this->input->post());
+        }
     }
 
     public function ver_citas()
@@ -234,6 +259,41 @@ class Cita extends CI_Controller
         $horas_disponibles = array_diff($horario, $horas_ocupadas);
 
         return $horas_disponibles;
+    }
+
+    public function submit()
+    {
+        $this->load->helper(array('form', 'url'));
+
+        $this->load->library('form_validation');
+        
+        $this->form_validation->set_rules(
+            'solicitante', 'Solicitante', 
+            'required|min_length[15]|max_length[20]',
+            array(
+                'required' => 'El nombre de la persona no debe exceder los 100 caracteres y debe tener más de 15'
+            )
+        );
+        $this->form_validation->set_rules(
+            'correo_solicitante', 
+            'Email', 'required|valid_email|min_length[5]|max_length[30]',
+            array(
+                'required' => 'El correo  no debe exceder los 100 caracteres y debe tener más de 5',
+            )
+        );
+        $this->form_validation->set_rules('fecha_solicitada', 'Fecha solicitada', 'required');
+        $this->form_validation->set_rules('hora_solicitada', 'Hora solicitada', 'required');
+
+        if ($this->form_validation->run() == FALSE)
+        {
+            $this->load->view('templates/head');
+            $this->load->view('citas/create-form');
+            $this->load->view('templates/footer');
+        }
+        else
+        {
+                echo var_dump($this->input->post());
+        }
     }
 
     private function validate_data()

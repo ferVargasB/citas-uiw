@@ -59,6 +59,6 @@
 
 <?php } ?>
 
-<!-- <script src="<?php echo base_url().'assets/';?>js/form-cita.js"></script>-->
+<script src="<?php echo base_url().'assets/';?>js/form-cita.js"></script>
 </body>
 </html>
