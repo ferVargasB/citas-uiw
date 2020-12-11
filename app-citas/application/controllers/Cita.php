@@ -128,16 +128,12 @@ class Cita extends CI_Controller
 
     public function logout()
     {
-<<<<<<< Updated upstream
         if ($this->session->logged_in) {
             $this->session->sess_destroy();
             header("Location:" . base_url() . 'index.php/Cita/login/success_destroy');
             exit();
         }
 
-=======
-        $this->session->sess_destroy();
->>>>>>> Stashed changes
         header("Location:" . base_url() . 'index.php/Cita/login/');
         exit();
     }
