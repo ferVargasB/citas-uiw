@@ -53,20 +53,30 @@
         <div class="container">
           <div class="row">
 
-            <div class="col-lg-12">
-              <div class="alert alert-dismissible animate__animated animate__fadeIn">
-                <h5><i class="icon fas fa-info"></i><strong>Bienvenido</strong></h5>
-                <strong>Por motivos de la Pandemia, para evitar la congestión de personas en la Universidad y como medida de prevención para la protección de nuestros alumnos, padres de familia y colaboradores, hemos habilitado este módulo en el que podrás agendar tus visitas con anticipación.</strong>
-              </div>
+          <div class="col-lg-12">
+
+            <div class="alert alert-dismissible animate__animated animate__fadeIn">
+
+              <h5><i class="icon fas fa-info"></i><strong>Bienvenido</strong></h5>
+
+              <strong>Como medida de seguridad debido a la contingencia sanitaria COVID-19 y para cuidar la salud de los alumnos, padres de familia y colaboradores de la Universidad, hemos habilitado este módulo de citas por internet en el que podrás agendar tus visitas con anticipación.</strong> 
+
             </div>
 
-            <div class="col-lg-12">
-              <div class="alert alert-warning alert-dismissible animate__animated animate__fadeIn">
-                <h5><i class="icon fas fa-exclamation-triangle"></i> Información importante</h5>
-                Es muy importante respetar el horario de tu cita ya que es un tiempo que se te está asignando a ti. En caso no de cumplir, puedes volver a crear tu cita.
-                Recuerda, obedece las medidas sanitarias dentro de la Universidad.
-              </div>
+          </div>
+
+
+
+          <div class="col-lg-12">
+
+            <div class="alert alert-warning alert-dismissible animate__animated animate__fadeIn">
+
+              <h5><i class="icon fas fa-exclamation-triangle"></i><strong>Información importante</strong></h5>
+                <strong>Es muy importante respetar el horario de tu cita ya que es un tiempo que se te está asignando a ti. En caso no de cumplir, puedes volver a crear tu cita.
+                Recuerda, obedece las medidas sanitarias dentro de la Universidad.</strong>
             </div>
+
+          </div>
 
             <div class="col-lg-12">
 
@@ -74,7 +84,7 @@
                 <div class="card-header">
                   <h5 class="card-title m-0">Llena el formulario para crear tu cita</h5>
                 </div>
-                <div class="alert alert-danger alert-dismissible">
+                <div class="alert alert-danger alert-dismissible" style="margin:15px;">
                   <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                   <h5><i class="icon fas fa-ban"></i> Alert!</h5>
                     <?php echo validation_errors();?>
@@ -85,21 +95,21 @@
                       <div class="form-group row">
                         <label for="solicitante" class="col-sm-12 col-form-label">Persona que visitará el campus a realizar el pago</label>
                         <div class="col-sm-12">
-                          <input type="text" class="form-control" minlength="10" maxlength="100" id="solicitante" name="solicitante" placeholder="Nombre de la persona" required="">
+                          <input type="text" class="form-control" minlength="15" maxlength="50" id="solicitante" name="solicitante" placeholder="Nombre de la persona" required="">
                         </div>
                       </div>
 
                       <div class="form-group row">
                         <label for="mail" class="col-sm-12 col-form-label">Correo eléctronico para agendar su cita</label>
                         <div class="col-sm-12">
-                          <input type="email" class="form-control" minlength="15" maxlength="100" id="mail" name="correo_solicitante" placeholder="Correo eléctronico" required="">
+                          <input type="email" class="form-control" minlength="15" maxlength="50" id="mail" name="correo_solicitante" placeholder="Correo eléctronico" required="">
                         </div>
                       </div>
 
                       <div class="form-group row">
                         <label for="fecha-solicitada" class="col-sm-12 col-form-label">Selecciona tu día para ver las horas disponibles (clic en el icono del calendario para seleccionar tu día)</label>
                         <div class="col-sm-12">
-                          <input type="date" class="form-control" id="fecha-solicitada" name="fecha_solicitada" max="2020-12-18" placeholder="Ingresa el día" required="">
+                          <input type="date" class="form-control" id="fecha-solicitada" name="fecha_solicitada" max="2021-12-18" placeholder="Ingresa el día" required="">
                         </div>
                       </div>
 

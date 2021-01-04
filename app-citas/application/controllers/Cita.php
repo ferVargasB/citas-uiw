@@ -20,19 +20,25 @@ class Cita extends CI_Controller
         
         $this->form_validation->set_rules(
             'solicitante', 'Solicitante', 
-            'required|min_length[15]|max_length[20]',
-            array(
-                'required' => 'El nombre de la persona no debe exceder los 100 caracteres y debe tener más de 15'
-            )
+            'required|min_length[15]|max_length[50]',
+            array('required' => "El nombre de la persona no debe exceder los 50 caracteres y debe tener más de 15")
         );
         $this->form_validation->set_rules(
             'correo_solicitante', 
-            'Email', 'required|valid_email|min_length[5]|max_length[30]',
+            'Email', 'required|valid_email|min_length[15]|max_length[50]',
             array(
-                'required' => 'El correo  no debe exceder los 100 caracteres y debe tener más de 5',
+                'required' => 'El correo  no debe exceder los 50 caracteres y debe tener más de 15',
             )
         );
-        $this->form_validation->set_rules('fecha_solicitada', 'Fecha solicitada', 'required');
+        $this->form_validation->set_rules(
+            'fecha_solicitada', 
+            'Fecha solicitada', 
+            'fecha_check',
+            array(
+                'fecha_check' => 'La fecha seleccionada no está disponible',
+            )
+        );
+            
         $this->form_validation->set_rules('hora_solicitada', 'Hora solicitada', 'required');
 
         if ($this->form_validation->run() == FALSE)
@@ -46,7 +52,7 @@ class Cita extends CI_Controller
         }
         else
         {
-                echo var_dump($this->input->post());
+            echo var_dump($this->input->post());
         }
     }
 
@@ -231,6 +237,13 @@ class Cita extends CI_Controller
         $horas_disponibles = array_diff($horario, $horas_ocupadas);
 
         return $horas_disponibles;
+    }
+
+    private function fecha_check($date)
+    {
+        //Traer las los dias festivos
+        //$this->form_validation->set_message("Fecha solicitada", "El campo {$date} es un campo invalido");
+        return FALSE;
     }
 
     private function send_mail($data)

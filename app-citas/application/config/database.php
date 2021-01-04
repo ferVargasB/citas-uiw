@@ -75,9 +75,9 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'database-mysq-test.cbstgcmiulb1.us-east-1.rds.amazonaws.com',
-	'username' => 'admin',
-	'password' => 'Apolion99',
+	'hostname' => 'localhost',
+	'username' => 'root',
+	'password' => 'root',
 	'database' => 'citas_uiw',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
