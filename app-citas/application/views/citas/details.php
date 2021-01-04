@@ -92,7 +92,7 @@
                   <div class="form-group row">
                     <label for="solicitante" class="col-sm-12 col-form-label">Fecha de tu cita:</label>
                     <div class="col-sm-12">
-                      <input type="text" class="form-control" value="<?php echo $cita[0]->fecha_solicitada;?>" disabled>
+                      <input type="text" class="form-control" value="<?php echo date("d-m-Y", strtotime($cita[0]->fecha_solicitada) );?>" disabled>
                     </div>
                   </div>
 

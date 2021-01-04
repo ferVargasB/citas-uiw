@@ -35,7 +35,7 @@ class Cita extends CI_Controller
             'callback_fecha_check|required',
             array(
                 'required' => 'Debes selecionar un día para tu cita',
-                'fecha_check' => "La {field} no es valida",
+                'fecha_check' => "La {field} no es válida",
             )
         );
             
@@ -186,7 +186,7 @@ class Cita extends CI_Controller
         exit();
     }
 
-    public function get($id_date = null, $success = FALSE)
+    public function get($id_date = null)
     {
 
         if (is_null($id_date)) {
@@ -197,7 +197,7 @@ class Cita extends CI_Controller
 
             $data = array(
                 'cita' => $this->Cita_model->get_date($id_date),
-                'es_consulta' => $success,
+                'es_consulta' => TRUE,
                 'title' => 'Detalles cita'
             );
 
@@ -292,13 +292,12 @@ class Cita extends CI_Controller
 
         $this->email->initialize($config);
 
-        $this->email->from('fernando.vargas@uiwbajio.mx', 'Fernando Vargas');
+        $this->email->from('citas@uiwbajio.mx', 'Citas UIW Bajío');
         $this->email->to( $data['correo_solicitante'] );
 
         $this->email->subject('Horario para realizar su pago en UIW Bajío');
         $this->email->message('Hola '.$data['solicitante']."\r\n".
-                                'Su cita para realizar su pago en caja está programado para el día: '.
-                                date("d-m-Y", strtotime($data['fecha_solicitada']) ).' en la hora: '.$data['hora_solicitada']."\r\n");
+                                'Su cita para realizar su pago en caja está programado para el día: '.date("d-m-Y", strtotime($data['fecha_solicitada']) ).' en la hora: '.$data['hora_solicitada']."\r\n");
 
         $this->email->send();
     }

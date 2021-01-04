@@ -84,11 +84,13 @@
                 <div class="card-header">
                   <h5 class="card-title m-0">Llena el formulario para crear tu cita</h5>
                 </div>
-                <div class="alert alert-danger alert-dismissible" style="margin:15px;">
-                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                  <h5><i class="icon fas fa-ban"></i> Alert!</h5>
-                    <?php echo validation_errors();?>
-                </div>
+                <?php if ( validation_errors() ) { ?>
+                  <div class="alert alert-danger alert-dismissible" style="margin:15px;">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h5><i class="icon fas fa-ban"></i> No se pudo crear tu cita</h5>
+                      <?php echo validation_errors();?>
+                  </div>
+                <?php } ?>
                 <div class="card-body">
                   <form class="form-horizontal" action="<?php echo base_url().'index.php/Cita/';?>" method="POST" id="crear-cita-form">
                     <div class="card-body">
