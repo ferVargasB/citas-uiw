@@ -52,7 +52,21 @@ class Cita extends CI_Controller
         }
         else
         {
-            echo var_dump($this->input->post());
+            $data = array(
+                "solicitante" => $this->input->post("solicitante"),
+                "correo_solicitante" => $this->input->post("correo_solicitante"),
+                "fecha_solicitada" => $this->input->post("fecha_solicitada"),
+                "hora_solicitada" => $this->input->post("hora_solicitada")
+            );
+            //insertar y redirigir con id de la cita
+            try {
+                $id_cita = $this->Cita_model->insert_cita($data);
+                $this->send_mail($data);
+                redirect("/Cita/get/{$id_cita}");
+            } catch (\Throwable $th) {
+                echo "ocurrió un error";
+                die();
+            }
         }
     }
 
