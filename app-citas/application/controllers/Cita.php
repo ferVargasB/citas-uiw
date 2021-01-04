@@ -15,7 +15,6 @@ class Cita extends CI_Controller
     public function index()
     {
         $this->load->helper(array('form', 'url'));
-
         $this->load->library('form_validation');
         
         $this->form_validation->set_rules(
@@ -32,10 +31,11 @@ class Cita extends CI_Controller
         );
         $this->form_validation->set_rules(
             'fecha_solicitada', 
-            'Fecha solicitada', 
-            'fecha_check',
+            'fecha solicitada', 
+            'callback_fecha_check|required',
             array(
-                'fecha_check' => 'La fecha seleccionada no está disponible',
+                'required' => 'Debes selecionar un día para tu cita',
+                'fecha_check' => "La {field} no es valida",
             )
         );
             
@@ -239,11 +239,17 @@ class Cita extends CI_Controller
         return $horas_disponibles;
     }
 
-    private function fecha_check($date)
+    public function fecha_check($date)
     {
-        //Traer las los dias festivos
-        //$this->form_validation->set_message("Fecha solicitada", "El campo {$date} es un campo invalido");
-        return FALSE;
+        $festivos = $this->Cita_model->get_festive_dates();
+
+         foreach($festivos as $festivo){
+            if ($date == $festivo->dia){
+                return FALSE;
+            }
+        }
+
+        return TRUE;
     }
 
     private function send_mail($data)

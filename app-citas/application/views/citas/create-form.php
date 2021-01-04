@@ -109,7 +109,7 @@
                       <div class="form-group row">
                         <label for="fecha-solicitada" class="col-sm-12 col-form-label">Selecciona tu día para ver las horas disponibles (clic en el icono del calendario para seleccionar tu día)</label>
                         <div class="col-sm-12">
-                          <input type="date" class="form-control" id="fecha-solicitada" name="fecha_solicitada" max="2021-12-18" placeholder="Ingresa el día" required="">
+                          <input type="date" class="form-control" id="fecha-solicitada" name="fecha_solicitada" max="2021-12-17" placeholder="Ingresa el día" required="">
                         </div>
                       </div>
 
