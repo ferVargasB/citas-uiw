@@ -61,10 +61,12 @@ class Cita extends CI_Controller
             //insertar y redirigir con id de la cita
             try {
                 $id_cita = $this->Cita_model->insert_cita($data);
+                $data['id'] = $id_cita;
                 $this->send_mail($data);
+                
                 redirect("/Cita/get/{$id_cita}");
-            } catch (\Throwable $th) {
-                echo "ocurrió un error";
+            } catch (Exception $e) {
+                echo $e->getMessage();
                 die();
             }
         }
@@ -269,6 +271,7 @@ class Cita extends CI_Controller
     private function send_mail($data)
     {
         $this->load->library('email');
+        $mensaje = $this->load->view('citas/email', $data,TRUE);
 
         $config['protocol']    = 'smtp';
 
@@ -278,15 +281,19 @@ class Cita extends CI_Controller
 
         $config['smtp_timeout'] = '7';
 
-        $config['smtp_user']    = '';
+        $config['smtp_user']    = 'citas@uiwbajio.mx';
 
-        $config['smtp_pass']    = '';
+        $config['smtp_pass']    = 'sistemacitas';
 
         $config['charset']    = 'utf-8';
 
         $config['newline']    = "\r\n";
 
-        $config['mailtype'] = 'text'; // or html
+        $config['charset'] = 'utf-8';
+
+        $config['wordwrap'] = TRUE;
+
+        $config['mailtype'] = 'html'; // or html
 
         $config['validation'] = TRUE; // bool whether to validate email or not      
 
@@ -296,9 +303,15 @@ class Cita extends CI_Controller
         $this->email->to( $data['correo_solicitante'] );
 
         $this->email->subject('Horario para realizar su pago en UIW Bajío');
-        $this->email->message('Hola '.$data['solicitante']."\r\n".
-                                'Su cita para realizar su pago en caja está programado para el día: '.date("d-m-Y", strtotime($data['fecha_solicitada']) ).' en la hora: '.$data['hora_solicitada']."\r\n");
+        //$this->email->message('Hola '.$data['solicitante']."\r\n".
+                                //'Su cita para realizar su pago en caja está programado para el día: '.date("d-m-Y", strtotime($data['fecha_solicitada']) ).' en la hora: '.$data['hora_solicitada']."\r\n");
 
+        $this->email->message($mensaje);                        
         $this->email->send();
+    }
+
+    public function email()
+    {
+        $mensaje = $this->load->view('citas/email');
     }
 }
